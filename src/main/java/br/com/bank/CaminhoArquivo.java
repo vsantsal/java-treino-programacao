@@ -26,23 +26,42 @@ public class CaminhoArquivo {
         return arquivo;
     }
 
+    /*
+     * Método que retorna instância de CaminhoArquivo
+     * a partir do id passado, com a seguinte lógica de construção:
+     * '/tmp/id_dir/id_file'
+     * onde id_dir é maior inteiro maior ou igual à divisão de id/1000
+     * e id_file é o id recebido
+     * 
+     * @param id Integer com id para o arquivo
+     * 
+     * @throws IllegalArgumentException se id nulo ou negativo
+    */
     public static CaminhoArquivo getInstance(Integer id) {
-        String b = "/tmp/";
-        String d = null;
-        if (id <= 1000) {
-            d = b + id;
-        } else {
-            int i = id;
-            boolean f = true;
-            while (f) {
-                if (id <= (i * 1000)) {
-                    d = b + i;
-                    f = false;
-                }
-                i++;
-            }
+        
+        // aplica lógica de validação
+        validaIdInformado(id);
+
+        // derivação do diretório
+        StringBuilder caminho = new StringBuilder();
+        caminho
+        .append("/tmp/")
+        .append(
+            BigDecimal
+            .valueOf(id / 1000.0)
+            .setScale(0, RoundingMode.CEILING));
+        
+        return new CaminhoArquivo(
+            Paths.get(caminho.toString()), 
+            Paths.get(caminho.append("/").append(id).toString()));
+
+    }
+
+    private static void validaIdInformado(Integer id){
+        if (id == null 
+                || id <= 0 ) {
+            throw new IllegalArgumentException("id deve ser inteiro positivo");
         }
-        return new CaminhoArquivo(Paths.get(d), Paths.get(d));
 
     }
 
