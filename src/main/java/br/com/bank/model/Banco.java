@@ -2,8 +2,12 @@ package br.com.bank.model;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -15,19 +19,21 @@ public class Banco {
         this.nome = nome;
     }
 
-    private List<Conta> contas = new ArrayList<>();
+    private final Map<String, Conta> contas = new HashMap<>();
 
     public void adicionarConta(Conta conta) {
-        contas.add(conta);
-    }
-    public Conta pesquisarContaDoCliente(String cpf) {
-        Conta c = null;
-        for (int i = 0; i < contas.size(); i++) {
-            if (contas.get(i).getCpf().equals(cpf)) {
-                c = contas.get(i);
-            }
+        if (conta == null) {
+            throw new IllegalArgumentException("conta inválida");
         }
-        return c;
+        contas.put(conta.getCpf(), conta);
+    }
+
+    public Optional<Conta> pesquisarContaDoCliente(String cpf) {
+        Conta conta = contas.get(cpf);
+        if (conta == null){
+            return Optional.empty();
+        }
+        return Optional.of(conta);
     }
 
     public List<Conta> listarContasAltaRenda() {
@@ -35,6 +41,10 @@ public class Banco {
     }
 
     private List<Conta> filtrarContas(Predicate<Conta> filtro) {
-        return contas.stream().filter(filtro).collect(Collectors.toList());
+        return contas.values().stream().filter(filtro).collect(Collectors.toList());
+    }
+
+    public int getNumeroDeContas(){
+        return contas.size();
     }
 }
