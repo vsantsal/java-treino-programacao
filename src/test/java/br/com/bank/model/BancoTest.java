@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -76,6 +78,24 @@ public class BancoTest {
 
         // Assert
         assertTrue(contaPesquisada.isEmpty());
+    }
+
+    @Test
+    @DisplayName("Listar contas de alta renda")
+    public void testCenario5(){
+        // Arrange
+        Conta contaAltaRenda = new Conta(CPF_CLIENTE_DEFAULT);
+        contaAltaRenda.depositar(10000);
+        Conta contaBaixaRenda = new Conta("123.456.789-10");
+        contaBaixaRenda.depositar(9999.99);
+        banco.adicionarConta(contaAltaRenda);
+        banco.adicionarConta(contaBaixaRenda);
+        
+        // Act
+        List<Conta> contas = banco.listarContasAltaRenda();
+        
+        // Assert
+        assertEquals(1, contas.size());
     }
 
 
