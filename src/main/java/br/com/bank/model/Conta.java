@@ -17,4 +17,8 @@ public class Conta {
 	public String getCpf() {
 		return cpf;
 	}
+
+	public void depositar(double valor) {
+		this.saldo += valor;
+	}
 }
