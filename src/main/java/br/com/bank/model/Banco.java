@@ -12,11 +12,15 @@ public class Banco {
 
     private String nome;
 
+    private final Map<String, Conta> contas = new HashMap<>();
+
     public Banco(String nome) {
         this.nome = nome;
     }
 
-    private final Map<String, Conta> contas = new HashMap<>();
+    public String getNome() {
+        return nome;
+    }    
 
     public void adicionarConta(Conta conta) {
         if (conta == null) {
@@ -37,11 +41,12 @@ public class Banco {
         return filtrarContas(c -> c.getSaldo() >= 10000);
     }
 
-    private List<Conta> filtrarContas(Predicate<Conta> filtro) {
-        return contas.values().stream().filter(filtro).collect(Collectors.toList());
-    }
-
     public int getNumeroDeContas(){
         return contas.size();
+    }
+
+
+    private List<Conta> filtrarContas(Predicate<Conta> filtro) {
+        return contas.values().stream().filter(filtro).collect(Collectors.toList());
     }
 }

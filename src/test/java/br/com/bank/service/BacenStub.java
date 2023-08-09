@@ -6,4 +6,9 @@ import br.com.bank.model.Banco;
 
 public class BacenStub extends Bacen {
 
+    @Override
+    public long cadastrarBanco(Banco banco) {
+        return 42;
+    }
+
 }
