@@ -76,7 +76,7 @@ public class AlunoController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
