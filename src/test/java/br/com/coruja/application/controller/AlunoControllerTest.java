@@ -42,7 +42,7 @@ public class AlunoControllerTest {
             post(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
-                "{\"aluno\": \"fulano\", " +
+                "{\"nome\": \"fulano\", " +
                 " \"email\": \"fulano@estrategia.com.br\"}" )
         )
             // Assert
@@ -51,5 +51,21 @@ public class AlunoControllerTest {
                 .andExpect(header().string("Location", containsString(ENDPOINT)));
         
     }
+
+    @DisplayName("Teste de matrícula de aluno sem nome informa erro na requisição de cliente")
+    @Test
+    public void testCenario2()  throws Exception  {
+        // Arrange/Act
+     // Arrange/Act
+        this.mockMvc.perform(
+        post(ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(
+                        "{\"email\": \"emailsemnome@estrategia.com.br\"}")
+        )
+        // Assert
+        .andExpect(status().is4xxClientError());        
+    }
+
     
 }
