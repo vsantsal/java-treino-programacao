@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class AlunoController {
     @PostMapping
     @Transactional
     public ResponseEntity<AlunoPesquisaDTO> save(
-        @RequestBody AlunoCadastroDTO dto, 
+        @RequestBody @Valid AlunoCadastroDTO dto, 
         UriComponentsBuilder uriComponentsBuilder){
             Aluno alunoSalvo = repository.save(dto.toModel());
             URI uri = uriComponentsBuilder.path("/api/alunos/{id}").buildAndExpand(alunoSalvo.getId()).toUri();
@@ -76,7 +77,7 @@ public class AlunoController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
