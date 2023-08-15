@@ -8,6 +8,10 @@ import java.nio.file.Paths;
 public class CaminhoArquivo {
 
 
+    private static final String DIRETORIO_BASE = "/tmp/";
+
+    private static final double NUMERO_ARQUIVOS_POR_DIRETORIO = 1000.0;
+
     private Path diretorio;
 
     private Path arquivo;
@@ -45,10 +49,10 @@ public class CaminhoArquivo {
         // derivação do diretório
         StringBuilder caminho = new StringBuilder();
         caminho
-        .append("/tmp/")
+        .append(DIRETORIO_BASE)
         .append(
             BigDecimal
-            .valueOf(id / 1000.0)
+            .valueOf(id / NUMERO_ARQUIVOS_POR_DIRETORIO)
             .setScale(0, RoundingMode.CEILING));
         
         return new CaminhoArquivo(

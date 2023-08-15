@@ -38,8 +38,8 @@ class SistemaBancarioTest {
    public void testCenario1(){
     // Arrange 
     Bacen bacenFake = new BacenFake();
-    Mockito.when(bacen.cadastrarBanco(banco))
-            .thenReturn(bacenFake.cadastrarBanco(banco));
+    sistemaBancario = new SistemaBancario(bacenFake);
+    
     // Act
     long numeroRegistroObtido = sistemaBancario.registrarBanco(banco);
 
@@ -53,8 +53,8 @@ class SistemaBancarioTest {
    public void testCenario2(){
     // Arrange 
     Bacen stubBacen = new BacenStub();
-    Mockito.when(bacen.cadastrarBanco(banco))
-            .thenReturn(stubBacen.cadastrarBanco(banco));
+    sistemaBancario = new SistemaBancario(stubBacen);
+
     // Act
     long numeroRegistroObtido = sistemaBancario.registrarBanco(banco);
 
